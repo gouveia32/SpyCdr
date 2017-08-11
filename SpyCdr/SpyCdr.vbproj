@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3F4429AF-17C2-433D-BE7C-EA08504F82FE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SpyCdr.My.MyApplication</StartupObject>
+    <RootNamespace>SpyCdr</RootNamespace>
+    <AssemblyName>SpyCdr</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>CFD6D2EEEAF3760FD3C1891F94E357F05F247F2A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>SpyCdr_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <ApplicationIcon>Pesquisa.ico</ApplicationIcon>
+    <TargetZone>LocalIntranet</TargetZone>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkProfile />
+    <PublishUrl>D:\Distribuicao\SpyCdr_Inst\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://10.14.83.164/SpyCdrV3/</UpdateUrl>
+    <ProductName>SpyCdrV3</ProductName>
+    <PublisherName>SpyCdrV3</PublisherName>
+    <MinimumRequiredVersion>3.0.0.0</MinimumRequiredVersion>
+    <WebPage>publicar.htm</WebPage>
+    <TrustUrlParameters>true</TrustUrlParameters>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>3.10.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SpyCdr.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SpyCdr.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=9.5.0.7, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\DotNetBar for Windows Forms\patch\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraNavBar.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DundasWinChart, Version=5.5.0.1696, Culture=neutral, PublicKeyToken=a4c03dce5db22406, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 6.4.3\Assemblies\v2.0\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Data.Odbc" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Web" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="BalloonSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="clsDataGridViewGraph.vb" />
+    <Compile Include="frmApagaRegistros.Designer.vb">
+      <DependentUpon>frmApagaRegistros.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmApagaRegistros.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmClientes.Designer.vb">
+      <DependentUpon>frmClientes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmClientes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGrupos.Designer.vb">
+      <DependentUpon>frmGrupos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGrupos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEventos.Designer.vb">
+      <DependentUpon>frmEventos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmEventos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmHistorico.Designer.vb">
+      <DependentUpon>frmHistorico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmHistorico.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInicio.Designer.vb">
+      <DependentUpon>frmInicio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInicio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCdrs_N.Designer.vb">
+      <DependentUpon>frmListaCdrs_N.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCdrs_N.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManutencao.Designer.vb">
+      <DependentUpon>frmManutencao.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmManutencao.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDumpShadow.Designer.vb">
+      <DependentUpon>frmDumpShadow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDumpShadow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCDRs_H.Designer.vb">
+      <DependentUpon>frmListaCDRs_H.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCDRs_H.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmListaCdrs.Designer.vb">
+      <DependentUpon>frmListaCdrs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListaCdrs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPPIs.Designer.vb">
+      <DependentUpon>frmPPIs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPPIs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrincipal0.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrincipal2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmResumo.Designer.vb">
+      <DependentUpon>frmResumo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmResumo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmModelo.Designer.vb">
+      <DependentUpon>frmModelo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmModelo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrincipal1.Designer.vb">
+      <DependentUpon>frmPrincipal1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPrincipal1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGeraHistorico.Designer.vb">
+      <DependentUpon>frmGeraHistorico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGeraHistorico.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSobre.Designer.vb">
+      <DependentUpon>frmSobre.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmSobre.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrafPorTerminal.Designer.vb">
+      <DependentUpon>frmTrafPorTerminal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrafPorTerminal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrafPPI.Designer.vb">
+      <DependentUpon>frmTrafPPI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrafPPI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mMySql.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.vb" />
+    <Compile Include="SplashSpyCdr.Designer.vb">
+      <DependentUpon>SplashSpyCdr.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SplashSpyCdr.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ValueDescriptionPair.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BalloonSearch.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BalloonSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmApagaRegistros.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmApagaRegistros.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmClientes.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmClientes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGrupos.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGrupos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEventos.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmEventos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmHistorico.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmHistorico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInicio.resx">
+      <DependentUpon>frmInicio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCdrs_N.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmListaCdrs_N.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmManutencao.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmManutencao.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDumpShadow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDumpShadow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCDRs_H.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmListaCDRs_H.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListaCdrs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmListaCdrs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPPIs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPPIs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal0.resx">
+      <DependentUpon>frmPrincipal0.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal2.pt-BR.resx">
+      <DependentUpon>frmPrincipal2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal2.resx">
+      <DependentUpon>frmPrincipal2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmResumo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmResumo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmModelo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmModelo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrincipal1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPrincipal1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGeraHistorico.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmGeraHistorico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSobre.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSobre.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrafPorTerminal.resx">
+      <DependentUpon>frmTrafPorTerminal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrafPPI.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmTrafPPI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SplashSpyCdr.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashSpyCdr.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="SpyCdr_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon 291.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon 299.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icon 264.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\Icon 257.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ho0027-48.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\down.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hi0058-48.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oi0013-48.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <BaseApplicationManifest Include="My Project\app.manifest" />
+    <None Include="Resources\Icon 228.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="MySql.Data">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Universal%29 V2 Icon 10.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Universal%29 V2 Icon 23.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stylewriter 2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Epson_Photo_700.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Aussichten.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B 02 %2835%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Question2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Question3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Question.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clear Windows.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tools.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mouse Tools.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EXIT.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eraser.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dr..ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32-find.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 67.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 68.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 15.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 19.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 03.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 04.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 07.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 38.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 41.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 11.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 21.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 151.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FauxS-XP %28Oynx%29 V2 Icon 14.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\03-HiTech World Dialup.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\monitor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_doc.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\113.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Floppy.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3D Folders Open Folder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\excel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExportarExcel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ICONS\background1.jpg" />
+    <Content Include="Pesquisa.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

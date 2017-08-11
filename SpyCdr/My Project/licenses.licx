@@ -1,0 +1,8 @@
+DevExpress.Patch.InMemoryPatch, DevExpress.Patch.Common, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7fc7bfca2443de66
+Dundas.Charting.WinControl.Chart, DundasWinChart, Version=5.5.0.1696, Culture=neutral, PublicKeyToken=a4c03dce5db22406
+DevExpress.XtraPivotGrid.PivotGridControl, DevExpress.XtraPivotGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraEditors.ComboBoxEdit, DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraTab.XtraTabControl, DevExpress.XtraEditors.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraEditors.XtraScrollableControl, DevExpress.Utils.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraVerticalGrid.VGridControl, DevExpress.XtraVerticalGrid.v10.1, Version=10.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a

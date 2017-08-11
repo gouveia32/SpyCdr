@@ -1,0 +1,583 @@
+
+Public Class cSpyCdr
+    'define os objetos connecton, command e dataadapter
+    Dim strsql As String
+    Dim conn As OdbcConnection
+    Dim comm As OdbcCommand
+
+    Dim registrosAfetados As Integer
+    Dim IndicadorNome() As String = {"CO0", "CO1", "CO2", "CO3", "DSC", "LO", "NR1", "NR5", "OK1", "OK5", "OU"}
+
+    Private Function TabelaExiste(ByVal conexaoSQL As OdbcConnection, ByVal nomeBanco As String, ByVal nomeTabela As String) As Boolean
+        Dim tabela As New DataTable
+        Dim criterioSQL As String
+
+        criterioSQL = "SELECT * " _
+                    & "FROM INFORMATION_SCHEMA.TABLES " _
+                    & "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '" & nomeBanco _
+                    & "' ORDER BY TABLE_TYPE"
+        Try
+            Dim da As New OdbcDataAdapter(criterioSQL, conexaoSQL)
+            da.Fill(tabela)
+
+            For Each dr As DataRow In tabela.Rows
+                criterioSQL = dr("TABLE_NAME").ToString
+                If dr("TABLE_NAME").ToString.ToUpper = nomeTabela.ToUpper Then
+                    Return True
+                End If
+            Next
+            Return False
+        Catch ex As Exception
+            MessageBox.Show("ERRO " & ex.Message, "Verifica tabela")
+            Return False
+        End Try
+
+    End Function
+
+    Public Function BancoExiste(ByVal conexaoSQL As OdbcConnection, ByVal nomeBanco As String) As Boolean
+        Dim tabela As New DataTable
+        Dim criterioSQL As String
+
+        criterioSQL = "SELECT * " _
+                    & "FROM INFORMATION_SCHEMA.TABLES " _
+                    & "WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '" & nomeBanco _
+                    & "';"
+        Try
+            Dim da As New OdbcDataAdapter(criterioSQL, conexaoSQL)
+            da.Fill(tabela)
+
+            If tabela.Rows.Count > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("ERRO " & ex.Message, "Verifica banco")
+            Return False
+        End Try
+
+    End Function
+
+    Public Function CriarBanco(ByVal conexaoSQL As OdbcConnection, ByVal Bilhetador As String)
+        Dim NomeBanco As String = "SpyCdr_" & Bilhetador
+        Dim Sql = "CREATE DATABASE " & nomeBanco & ";"
+
+        comm = New OdbcCommand(Sql, conexaoSQL)
+        comm.Connection.Close()
+        comm.Connection.Open()
+
+        Try
+            registrosAfetados = comm.ExecuteNonQuery() 'Cria banco
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            comm.Connection.Close()
+        End Try
+
+    End Function
+    Public Function CriarTabelas(ByVal Bilhetador As String, ByVal Saida As ListBox)
+        Dim i As Integer
+        strsql = "Driver={MySQL ODBC 3.51 Driver}" _
+           & ";Server=" & frmConfiguracao.txtServidorMySql.Text _
+           & ";Database=" & frmConfiguracao.txtBancoMySql.Text _
+           & ";uid=" & frmConfiguracao.txtUsuarioMySql.Text _
+           & ";pwd=" & frmConfiguracao.txtSenhaMySql.Text & ";"
+
+        Dim Sql = "select * from cdrs where (false);"
+
+
+        'define os objetos connecton, command e dataadapter
+        conn = New OdbcConnection(strsql)
+        comm = New OdbcCommand(Sql, conn)
+
+        Saida.Items.Clear()
+        Saida.Items.Add("Criando TABELAS no Banco [" & frmConfiguracao.txtBancoMySql.Text & "]")
+
+        Try
+            With comm
+                .CommandType = CommandType.Text
+                .Connection = conn
+                conn.Open()
+                For i = 0 To IndicadorNome.Length - 1 'criar as tabelas por indicador
+                    If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "cdrs_" & IndicadorNome(i)) Then
+                        .CommandText = "CREATE TABLE cdrs_" & IndicadorNome(i) & "(" _
+                            & "TTFILE varchar(4) default NULL," _
+                            & "ASS_A varchar(13) default NULL," _
+                            & "CSP varchar(2) default NULL," _
+                            & "ASS_B varchar(16) default NULL," _
+                            & "CAT varchar(2) default NULL," _
+                            & "FDS varchar(2) default NULL," _
+                            & "EOS varchar(4) default NULL," _
+                            & "PT varchar(1) default NULL," _
+                            & "ECH varchar(1) default NULL," _
+                            & "J_ENT varchar(4) default NULL," _
+                            & "J_SAI varchar(4) default NULL," _
+                            & "R_ENT varchar(4) default NULL," _
+                            & "R_SAI varchar(4) default NULL," _
+                            & "DATA datetime default NULL," _
+                            & "DUR_RING int(5) default NULL," _
+                            & "DURACAO varchar(10) default NULL," _
+                            & "DUR_TOTAL int(5) default NULL," _
+                            & "CLASSIF varchar(3) default NULL," _
+                            & " KEY Data_Index (DATA) " _
+                            & ") ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+
+                        registrosAfetados = .ExecuteNonQuery() 'Cria cdrs
+                        Saida.Items.Add(" ->Criado [cdrs_" & IndicadorNome(i) & "]")
+                    Else
+                        Saida.Items.Add(" ->A tabela [cdrs_" & IndicadorNome(i) & "] já existia")
+                    End If
+                Next i
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "log") Then
+                    .CommandText = "CREATE TABLE log (" _
+                        & "TTFILE varchar(4) default NULL," _
+                        & "DATA_BMP datetime default NULL," _
+                        & "DATA_BAIXA datetime default NULL"
+                    For i = 0 To 10
+                        .CommandText += ", CDRs_" & IndicadorNome(i) & " int(6) default NULL"
+                    Next i
+                        .CommandText += ") ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+
+                        registrosAfetados = .ExecuteNonQuery() 'Cria log
+                        Saida.Items.Add(" ->Criado [log]")
+                Else
+                        Saida.Items.Add(" ->A tabela [log] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "clientes") Then
+                    .CommandText = "CREATE TABLE clientes (" _
+                        & "COD_CLI int(4) NULL auto_increment," _
+                        & "CLIENTE varchar(50) default NULL," _
+                        & "FAIXA_INICIO varchar(16) default NULL," _
+                        & "FAIXA_FIM varchar(16) default NULL," _
+                        & "ROTA_FAB varchar(10) default NULL," _
+                        & "VIP tinyint(1) default 0," _
+                        & "NR_CHAVE varchar(10) default NULL," _
+                        & "EMAIL varchar(50) default NULL," _
+                        & "PRIMARY KEY  (COD_CLI)," _
+                        & "KEY CLIENTE (CLIENTE)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria clientes
+                    Saida.Items.Add(" ->Criado [clientes]")
+                Else
+                    Saida.Items.Add(" ->A tabela [clientes] já existia")
+                End If
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "cliente_terminal") Then
+                    .CommandText = "CREATE TABLE cliente_terminal (" _
+                        & "TERMINAL varchar(16) NOT NULL," _
+                        & "COD_CLI int(4) default 0," _
+                        & "PRIMARY KEY  (TERMINAL)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria cliente_terminal
+                    Saida.Items.Add(" ->Criado [cliente_terminal]")
+                Else
+                    Saida.Items.Add(" ->A tabela [cliente_terminal] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "tabclassificacao") Then
+                    .CommandText = "CREATE TABLE tabclassificacao (" _
+                        & "FDS varchar(2) NOT NULL," _
+                        & "ECHO varchar(1) NOT NULL," _
+                        & "CLASSIF varchar(5) default NULL," _
+                        & "PRIMARY KEY  (FDS,ECHO)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria tabclassificacao
+                    Saida.Items.Add(" ->Criado [tabclassificacao]")
+                    .CommandText = "INSERT INTO tabclassificacao (FDS,ECHO, CLASSIF) VALUES" _
+                        & " ('--','1','DSC')," _
+                        & " ('--','3','OU')," _
+                        & " ('00','1','OU')," _
+                        & " ('01','-','OU')," _
+                        & " ('01','0','OK1')," _
+                        & " ('01','1','NR1')," _
+                        & " ('01','2','OU')," _
+                        & " ('01','3','OU')," _
+                        & " ('01','4','OU')," _
+                        & " ('02','1','LO')," _
+                        & " ('02','3','CO0')," _
+                        & " ('03','1','OU')," _
+                        & " ('05','0','OK5')," _
+                        & " ('05','1','NR5')," _
+                        & " ('05','2','OU')," _
+                        & " ('06','0','OK1')," _
+                        & " ('07','1','OU')," _
+                        & " ('08','1','OU')," _
+                        & " ('12','1','OU')," _
+                        & " ('15','1','OU')," _
+                        & " ('20','1','CO0')," _
+                        & " ('21','1','CO0')," _
+                        & " ('24','1','CO2')," _
+                        & " ('26','1','CO1')," _
+                        & " ('27','1','CO1')," _
+                        & " ('28','1','CO3')," _
+                        & " ('29','1','CO3')," _
+                        & " ('30','1','CO2')," _
+                        & " ('31','1','NR5')," _
+                        & " ('33','1','NR5')," _
+                        & " ('37','1','OU')"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria tabclassificacao
+                    Saida.Items.Add(" ->Incluídos registros em [tabclassificacao]")
+                Else
+                    Saida.Items.Add(" ->A tabela [tabclassificacao] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "X_Hora") Then
+                    .CommandText = "CREATE TABLE X_Hora (" _
+                        & "DATA datetime NOT NULL," _
+                        & "HORA tinyint(2) unsigned NOT NULL default 0," _
+                        & "TCH int(8) default 0," _
+                        & "CO0 int(7) default 0," _
+                        & "CO1 int(7) default 0," _
+                        & "CO2 int(7) default 0," _
+                        & "CO3 int(7) default 0," _
+                        & "DSC int(7) default 0," _
+                        & "LO int(7) default 0," _
+                        & "NR1 int(7) default 0," _
+                        & "NR5 int(7) default 0," _
+                        & "OK1 int(7) default 0," _
+                        & "OK5 int(7) default 0," _
+                        & "OU int(7) default 0," _
+                        & "PRIMARY KEY  (DATA, HORA)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria ddxpordia
+                    Saida.Items.Add(" ->Criado [X_Hora]")
+                Else
+                    Saida.Items.Add(" ->A tabela [X_Hora] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "X_rota_saida") Then
+                    .CommandText = "CREATE TABLE X_rota_saida (" _
+                        & "DATA datetime NOT NULL," _
+                        & "HORA tinyint(2) unsigned NOT NULL default 0," _
+                        & "R_SAI char(4) NOT NULL default 0," _
+                        & "TCH int(8) default 0," _
+                        & "CO0 int(7) default 0," _
+                        & "CO1 int(7) default 0," _
+                        & "CO2 int(7) default 0," _
+                        & "CO3 int(7) default 0," _
+                        & "DSC int(7) default 0," _
+                        & "LO int(7) default 0," _
+                        & "NR1 int(7) default 0," _
+                        & "NR5 int(7) default 0," _
+                        & "OK1 int(7) default 0," _
+                        & "OK5 int(7) default 0," _
+                        & "OU int(7) default 0," _
+                        & "PRIMARY KEY  (DATA, HORA, R_SAI)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria resumo_rota_saida
+                    Saida.Items.Add(" ->Criado [X_rota_saida]")
+                Else
+                    Saida.Items.Add(" ->A tabela [X_rota_saida] já existia")
+                End If
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "X_rota_entrada") Then
+                    .CommandText = "CREATE TABLE X_rota_entrada (" _
+                        & "DATA datetime NOT NULL," _
+                        & "HORA tinyint(2) unsigned NOT NULL default 0," _
+                        & "R_ENT char(4) NOT NULL default 0," _
+                        & "TCH int(8) default 0," _
+                        & "CO0 int(7) default 0," _
+                        & "CO1 int(7) default 0," _
+                        & "CO2 int(7) default 0," _
+                        & "CO3 int(7) default 0," _
+                        & "DSC int(7) default 0," _
+                        & "LO int(7) default 0," _
+                        & "NR1 int(7) default 0," _
+                        & "NR5 int(7) default 0," _
+                        & "OK1 int(7) default 0," _
+                        & "OK5 int(7) default 0," _
+                        & "OU int(7) default 0," _
+                        & "PRIMARY KEY  (DATA, HORA, R_ENT)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria resumo_rota_entrada
+                    Saida.Items.Add(" ->Criado [X_rota_entrada]")
+                Else
+                    Saida.Items.Add(" ->A tabela [X_rota_entrada] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "X_cliente_destinado") Then
+                    .CommandText = "CREATE TABLE X_cliente_destinado (" _
+                        & "DATA datetime NOT NULL," _
+                        & "HORA tinyint(2) unsigned NOT NULL default 0," _
+                        & "COD_CLI int(5) NOT NULL default 0," _
+                        & "TCH int(8) default 0," _
+                        & "CO0 int(7) default 0," _
+                        & "CO1 int(7) default 0," _
+                        & "CO2 int(7) default 0," _
+                        & "CO3 int(7) default 0," _
+                        & "DSC int(7) default 0," _
+                        & "LO int(7) default 0," _
+                        & "NR1 int(7) default 0," _
+                        & "NR5 int(7) default 0," _
+                        & "OK1 int(7) default 0," _
+                        & "OK5 int(7) default 0," _
+                        & "OU int(7) default 0," _
+                        & "PRIMARY KEY  (DATA, COD_CLI)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria resumo_cliente_destinado
+                    Saida.Items.Add(" ->Criado [X_cliente_destinado]")
+                Else
+                    Saida.Items.Add(" ->A tabela [X_cliente_destinado] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "X_cliente_originado") Then
+                    .CommandText = "CREATE TABLE X_cliente_originado (" _
+                        & "DATA datetime NOT NULL," _
+                        & "HORA tinyint(2) unsigned NOT NULL default 0," _
+                        & "COD_CLI int(5) NOT NULL default 0," _
+                        & "TCH int(8) default 0," _
+                        & "CO0 int(7) default 0," _
+                        & "CO1 int(7) default 0," _
+                        & "CO2 int(7) default 0," _
+                        & "CO3 int(7) default 0," _
+                        & "DSC int(7) default 0," _
+                        & "LO int(7) default 0," _
+                        & "NR1 int(7) default 0," _
+                        & "NR5 int(7) default 0," _
+                        & "OK1 int(7) default 0," _
+                        & "OK5 int(7) default 0," _
+                        & "OU int(7) default 0," _
+                        & "PRIMARY KEY  (DATA, COD_CLI)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria resumo_cliente_originado
+                    Saida.Items.Add(" ->Criado [X_cliente_originado]")
+                Else
+                    Saida.Items.Add(" ->A tabela [X_cliente_originado] já existia")
+                End If
+
+                If Not TabelaExiste(conn, frmConfiguracao.txtBancoMySql.Text, "_exrop") Then
+                    .CommandText = "CREATE TABLE _exrop (" _
+                        & "BILHETADOR varchar(5) default NULL," _
+                        & "ROTA varchar(10) default NULL," _
+                        & "MA varchar(21) default NULL," _
+                        & "BO varchar(3) default NULL," _
+                        & "RIN varchar(4) default NULL," _
+                        & "CO varchar(3) default NULL," _
+                        & "EO varchar(3) default NULL," _
+                        & "DETY varchar(9) default NULL," _
+                        & "PRI varchar(2) default NULL," _
+                        & "EC varchar(2) default NULL," _
+                        & "FNC varchar(1) default NULL," _
+                        & "DPC varchar(6) default NULL," _
+                        & "R varchar(9) default NULL," _
+                        & "R1 varchar(9) default NULL," _
+                        & "descFNC varchar(3) default NULL," _
+                        & "KEY Index_RIN (RIN)" _
+                        & ") ENGINE=InnoDB DEFAULT CHARSET=latin1"
+
+                    registrosAfetados = .ExecuteNonQuery() 'Cria _exrop
+                    Saida.Items.Add(" ->Criado [_exrop]")
+                Else
+                    Saida.Items.Add(" ->A tabela [_exrop] já existia")
+                End If
+            End With
+
+        Catch ex As Exception
+            MsgBox(" Erro : " & ex.InnerException.ToString & " - " & ex.Message)
+        Finally
+            conn.Close()
+            Saida.Items.Add("--------------------")
+            Saida.Items.Add("CONCLUÍDO!!")
+        End Try
+
+    End Function
+    Public Function Gera_XHora(ByVal Data As String)
+        Dim registrosAfetados, I, J As Integer
+        Dim linha As String
+        Dim ContReg(24, 11) As Integer
+        strsql = "Driver={MySQL ODBC 3.51 Driver}" _
+           & ";Server=" & frmConfiguracao.txtServidorMySql.Text _
+           & ";Database=" & frmConfiguracao.txtBancoMySql.Text _
+           & ";uid=" & frmConfiguracao.txtUsuarioMySql.Text _
+           & ";pwd=" & frmConfiguracao.txtSenhaMySql.Text & ";"
+
+        Try
+            conn = New OdbcConnection(strsql)
+            comm = New OdbcCommand()
+            Dim reader As OdbcDataReader
+            With comm
+                .CommandType = CommandType.Text
+                .CommandText = "DELETE FROM X_Hora " _
+                             & " WHERE date(DATA) = '" & Data & "'"
+                .Connection = conn
+            End With
+            conn.Open()
+            registrosAfetados = comm.ExecuteNonQuery() 'Apaga registros do dia
+
+            'Carrega Matriz
+            For I = 0 To 10
+                comm.CommandText = "SELECT Hour(DATA) AS HORA, Count(*) AS " & IndicadorNome(I) _
+                                 & " FROM cdrs_" & IndicadorNome(I) _
+                                 & " WHERE date(DATA) = '" & Data _
+                                 & "' GROUP BY hour(DATA);"
+                reader = comm.ExecuteReader() 'totais por Hora do Indicador
+
+                While reader.Read()
+                    ContReg(reader(0), I) = reader(1)
+                End While
+                reader.Close()
+            Next I
+            'Grava Matriz em X_Hora
+            For J = 0 To 23
+                linha = "INSERT INTO X_Hora (DATA, HORA, CO0, CO1, CO2, CO3, DSC, LO, NR1, NR5, OK1, OK5, OU) VALUES ('" _
+                       & Data & "'," _
+                       & J
+                For I = 0 To 10
+                    linha += "," & ContReg(J, I)
+                Next I
+                linha += ");"
+                comm.CommandText = linha
+                registrosAfetados = comm.ExecuteNonQuery() 'totais por Hora do Indicador
+            Next J
+
+
+        Catch ex As Exception
+            MsgBox(" Erro : " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Function
+
+    Public Function Gera_X_rota_saida(ByVal Data As String)
+        Dim registrosAfetados, I, J As Integer
+        Dim linha As String
+        strsql = "Driver={MySQL ODBC 3.51 Driver}" _
+           & ";Server=" & frmConfiguracao.txtServidorMySql.Text _
+           & ";Database=" & frmConfiguracao.txtBancoMySql.Text _
+           & ";uid=" & frmConfiguracao.txtUsuarioMySql.Text _
+           & ";pwd=" & frmConfiguracao.txtSenhaMySql.Text & ";"
+
+        Try
+            conn = New OdbcConnection(strsql)
+            comm = New OdbcCommand()
+            Dim commX = New OdbcCommand()
+            Dim readerCDRs As OdbcDataReader
+            Dim readerX As OdbcDataReader
+            With comm
+                .CommandType = CommandType.Text
+                .CommandText = "DELETE FROM x_rota_saida " _
+                             & " WHERE date(DATA) = '" & Data & "'"
+                .Connection = conn
+            End With
+            conn.Open()
+            registrosAfetados = comm.ExecuteNonQuery() 'Apaga registros do dia
+
+            'Processa primeiro Ok1
+            comm.CommandText = "INSERT INTO x_rota_saida " _
+                 & " SELECT date(DATA) as DATA, Hour(DATA) AS HORA, R_SAI, 0 AS CO0, 0 AS CO1, 0 AS CO2, 0 AS CO3, 0 AS DSC, 0 AS LO, 0 AS NR1, 0 AS NR5, Count(*) AS OK1, 0 AS OK5,0 AS OU " _
+                 & " FROM cdrs_ok1" _
+                 & " WHERE date(DATA) = '" & Data _
+                 & "' GROUP BY HORA, R_SAI;"
+            registrosAfetados = comm.ExecuteNonQuery() 'Insere todos Ok1 inicialmente
+
+            'Processa cada indicador
+            For I = 0 To 10
+                If I <> 8 Then 'pula ok1
+                    comm.CommandText = "SELECT date(DATA) as DATA, Hour(DATA) AS HORA, R_SAI, Count(*) AS " & IndicadorNome(I) _
+                                     & " FROM cdrs_" & IndicadorNome(I) _
+                                     & " WHERE date(DATA) = '" & Data _
+                                     & "' GROUP BY HORA, R_SAI;"
+                    readerCDRs = comm.ExecuteReader() 'totais por Hora do Indicador
+
+                    While readerCDRs.Read() 'Le todas linhas da query
+                        With commX
+                            .CommandType = CommandType.Text
+                            .Connection = conn
+
+                            .CommandText = "SELECT * FROM x_rota_saida " _
+                                            & " WHERE DATA = '" & Data _
+                                            & "' AND HORA = " & readerCDRs(1) _
+                                            & " AND R_SAI = '" & readerCDRs(2) & "';"
+                            readerX = .ExecuteReader() 'Verifica se o REG já existe
+
+                            If readerX.HasRows Then
+                                'Editar
+                                readerX.Read() 'Le o registro
+                                .CommandText = "UPDATE x_rota_saida SET " & IndicadorNome(I) & " = " & readerCDRs(3) _
+                                            & " WHERE DATA = '" & Data _
+                                            & "' AND HORA = " & readerCDRs(1) _
+                                            & " AND R_SAI = '" & readerCDRs(2) & "';"
+
+                                readerX.Close()
+                                registrosAfetados = .ExecuteNonQuery() 'Atualiza registro com o indicador
+                            Else
+                                'Insert
+                                .CommandText = "INSERT INTO x_rota_saida (DATA, HORA, R_SAI, " & IndicadorNome(I) _
+                                            & ") VALUES ('" & Data & "'," & readerCDRs(1) & ",'" & readerCDRs(2) & "'," & readerCDRs(3) & ");"
+                                readerX.Close()
+                                registrosAfetados = .ExecuteNonQuery() 'Insere registro novo
+                            End If
+                        End With
+
+                    End While
+                    readerCDRs.Close()
+                End If
+            Next I
+            'Grava Matriz em X_Hora
+            For J = 0 To 23
+                linha = "INSERT INTO x_rota_saida (DATA, HORA, R_SAI, CO0, CO1, CO2, CO3, DSC, LO, NR1, NR5, OK1, OK5, OU) VALUES ('" _
+                       & Data & "'," _
+                       & J
+                For I = 0 To 10
+                    linha += ","
+                Next I
+                linha += ");"
+                comm.CommandText = linha
+                registrosAfetados = comm.ExecuteNonQuery() 'totais por Hora do Indicador
+            Next J
+
+
+        Catch ex As Exception
+            MsgBox(" Erro : " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Function
+    Public Function Gera_X_Hora(ByVal Data As String)
+        Dim registrosAfetados, I, J As Integer
+        Dim linha As String
+        Dim ContReg(24, 11) As Integer
+        strsql = "Driver={MySQL ODBC 3.51 Driver}" _
+           & ";Server=" & frmConfiguracao.txtServidorMySql.Text _
+           & ";Database=" & frmConfiguracao.txtBancoMySql.Text _
+           & ";uid=" & frmConfiguracao.txtUsuarioMySql.Text _
+           & ";pwd=" & frmConfiguracao.txtSenhaMySql.Text & ";"
+
+        Try
+            conn = New OdbcConnection(strsql)
+            comm = New OdbcCommand()
+            Dim reader As OdbcDataReader
+            With comm
+                .CommandType = CommandType.Text
+                .CommandText = "DELETE FROM X_Hora " _
+                             & " WHERE date(DATA) = '" & Data & "'"
+                .Connection = conn
+            End With
+            conn.Open()
+            registrosAfetados = comm.ExecuteNonQuery() 'Apaga registros do dia
+
+            'Processa primeiro cdrs
+            comm.CommandText = "INSERT INTO x_rota_saida " _
+                 & " SELECT date(DATA) as DATA, Hour(DATA) AS HORA, R_SAI, 0 AS CO0, 0 AS CO1, 0 AS CO2, 0 AS CO3, 0 AS DSC, 0 AS LO, 0 AS NR1, 0 AS NR5, Count(*) AS OK1, 0 AS OK5,0 AS OU " _
+                 & " FROM cdrs" _
+                 & " WHERE date(DATA) = '" & Data _
+                 & "' GROUP BY HORA, R_SAI;"
+
+        Catch ex As Exception
+            MsgBox(" Erro : " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Function
+
+End Class

@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="rtbNovidades.Text" xml:space="preserve">
+    <value>30-04-2009
+Incluído no formulário Histórico botão para exportar a grade para o Excel
+Incluído opção de escolher um período (Data Inicial e Data Final) para gerar o gráfico.
+
+01-04-2009
+Corrigido a geração de estatísitica por Grupo nas tecnologias Ericsson e Huawei. Quando o RIN / TG não correspondia a uma rota inclusa no EXROP / LST_TG este bilhete não estava sendo contabilizado.
+
+
+09-03-2009 
+No resumo Diário incluímos a opção de escolha do PMM, hora ou 24h.
+
+
+12-02-2009
+Correção na rotina  Procura Loop.
+
+28-05-2008
+Nos formulários Resumo e Histórico, a atualização dos gráficos se dará pressionando-se o botão Atualizar.
+Incluímos o tratamento de CDRs das centrais NEAX.
+
+15-04-2008
+Implementado digrama de Causa-Efeito (Ishikawa) no ListaCDRs por enquanto só para centrais AXE.
+
+16-01-2008
+Acrescentamos a opção de Gravar/Carregar um critério de pesquisa no formulário Lista CDRs.
+
+14-01-2008
+Fizemos alteração na estatística X_Destino a qual agora chama-se X_Grupo, onde podemos preparar grupos que contabilize CDRs por origem e/ou destino. IMPORTANTE para que esta versão funcione adequadamente precisa que seja seguido o seguinte procedimento: Vá na opção Manutenções/Configurações e deixe marcadas as tabela Grupos e X_Grupo e então clique em criar tabela, isso fará com que as tabelas hoje existentes (Destinos e X_Destino) sejam migradas para as novas (Grupos e X_Grupos).
+
+10-12-2007
+Acrescentamos na opção Histórico balão com o evento cadastrado num determinado dia/hora. Para funcionar adequadamente será necessário criar o campo TIPO na tabela EVENTOS e cadastrar os eventos na opção Manutenções/Cadastro de Evento (F9).
+
+05-12-2007
+Em ListaCDRs implementamos um botão para pesquisar possíveis LOOPs. Ao Cioná-lo será criado um pesquisa com os CDRs do dia selecionado, com DUR_RING &lt; 5seg cuja classificação é DSC, a seguir seleciona os CDRs que retirem pelo menos 3 vezes com mesmo ASS_B, ASS_A no mesmo segundo.
+
+05-12-2007
+Em ListaCDRs incluímos a opção de fazer a presquisa já ordenada por mais de um campo pré-selecionados. 
+Após obter o resultado ao clicar em uma coluna re-ordenará por esta. A ordenação por [ASS_B, ASS_A, DATA] pode ser útil na identificação de LOOPs.
+03-12-2007
+No gráfico Histórico agora podemos escolher o Indicador Tudo_ch ou Tudo_% para termos um acompanhamento com todos indicadores.
+
+26-11-2007
+Implementado nova estatísitia (X_EOS). Inicialmente vá em Manutenções/Configuraç~pes e clique em &lt;Criar Tabelas&gt;, depois é só processar o X_EOS.
+
+19-11-2007
+No Resumo diário implementamos opções de filtrar localizar ou abrir histórico para um ítem. Use clique direito para acessar menu suspenso.
+
+16-11-2007
+- Melhorias no cadastro de Clientes, use clique direito para localizar um cliente.
+- Desenvolvido cadastro de Eventos;
+
+12-11-2007
+Incluído a opção de IMPRIMIR nos FORMs Resumo e Histórico;
+No Resumo por [Destinos] pode utilizar o duplo-clique para ver os CDRs
+
+09-11-2007
+Implementamos no Lista CDRs a opção de mostrar o gráfico com os indicadores dos CDRs ali selecionados, basta dar clique duplo
+ na lateral esquerda do painel com a grade.
+
+
+07-11-2007
+Em ListaCDRs use click da direita e tenha acesso a filtros.
+
+06-11-2007
+Em Lista CDRs
+- Mostrar Tempo gasto na seleção de registros
+- Incluimos a opção LIMITE.
+
+</value>
+  </data>
+  <data name="txtMensagemPrincipal.Text" xml:space="preserve">
+    <value>      Esta ferramenta tem por objetivo auxiliar o Analista na Avaliação de Desempenho da Rede, fornecendo consultas nos CDRs e criando históricos por diversas visões (Rota_Saída, Rota_Entrada, EOS, etc.). Com estes históricos temos como destacar os maiores ofenssores do dia por qualquer indicador e ainda acompanhar a evolução deste ao longo do ano, mes ou até por dia.
+
+Último TTFILE baixado:
+
+Para ver as últimas alterações clique em 
+
+</value>
+  </data>
+</root>
